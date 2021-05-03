@@ -1,0 +1,3 @@
+#!/bin/bash
+dpkg -i /home/champuser/webmin_1.920_all.deb
+sed -i s/passwd_mode=0/passwd_mode=2/g /etc/webmin/miniserv.conf;sudo service webmin restart

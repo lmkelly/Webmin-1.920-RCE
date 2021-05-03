@@ -1,0 +1,47 @@
+---
+- name: provision_target
+  hosts: target
+  tasks:
+  - name: Install apache
+    apt:
+      name: ['apache2']
+      state: latest
+    become: true
+  - name: Install curl
+    apt:
+      name: ['curl']
+      state: latest
+    become: true
+  - name: Install libauthen-pam-perl
+    apt:
+      name: ['libauthen-pam-perl']
+      state: latest
+    become: true
+  - name: Install apt-show-versions
+    apt:
+      name: ['apt-show-versions']
+      state: latest
+    become: true
+  - name: Install libio-pty-perl
+    apt:
+      name: ['libio-pty-perl']
+      state: latest
+    become: true
+  - name: Install python
+    apt:
+      name: ['python']
+      state: latest
+    become: true
+  - name: Download vulnerable webmin
+    get_url:
+      url: https://netix.dl.sourceforge.net/project/webadmin/webmin/1.920/webmin_1.920_all.deb
+      dest: /home/champuser/webmin_1.920_all.deb
+  - name: install webmin and make vulnerable
+    template:
+      src: files/provision_target.sh.j2
+      dest: /home/champuser/provision_target.sh
+      mode: u+rwx
+  - name: run script
+    shell: bash /home/champuser/provision_target.sh
+    become: true
+
